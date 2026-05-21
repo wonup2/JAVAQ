@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Java / AP CS A Style Assessment - 8th Grade</title>
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #d9dee8;
+    --accent: #2563eb;
+    --good: #166534;
+    --bad: #991b1b;
+    --good-bg: #dcfce7;
+    --bad-bg: #fee2e2;
+    --soft: #eef2ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  header {
+    background: linear-gradient(135deg, #1d4ed8, #4338ca);
+    color: white;
+    padding: 30px 20px;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h1 { margin: 0 0 8px; font-size: 30px; }
+  .subtitle { margin: 0; opacity: 0.95; }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    margin: 18px 0;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  }
+  .toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    align-items: end;
+  }
+  label.small { display: block; font-size: 13px; color: var(--muted); margin-bottom: 5px; font-weight: 700; }
+  input[type="text"], select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+    background: white;
+  }
+  button {
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-weight: 700;
+    cursor: pointer;
+    background: var(--accent);
+    color: white;
+  }
+  button.secondary { background: #334155; }
+  button.light { background: #e5e7eb; color: #111827; }
+  .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .pill { background: var(--soft); color: #3730a3; padding: 6px 10px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+  details.chapter {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin: 14px 0;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+  }
+  details.chapter > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 16px 18px;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--border);
+    font-weight: 800;
+    font-size: 19px;
+  }
+  details.chapter > summary::-webkit-details-marker { display: none; }
+  .chapter-body { padding: 16px; }
+  .question-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    margin: 0 0 14px;
+    background: #fff;
+  }
+  .question-title { font-weight: 800; margin-bottom: 10px; }
+  pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: #111827;
+    color: #f9fafb;
+    border-radius: 12px;
+    padding: 14px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .choices { display: grid; gap: 8px; margin-top: 10px; }
+  .choice {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 8px;
+    align-items: start;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background: #ffffff;
+  }
+  .choice:hover { border-color: #93c5fd; background: #f8fbff; }
+  .choice input { margin-top: 3px; }
+  .result-note {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    display: none;
+    font-size: 14px;
+  }
+  .correct-card { border-color: #86efac; background: #f7fff9; }
+  .wrong-card { border-color: #fca5a5; background: #fff7f7; }
+  .result-note.good { display: block; background: var(--good-bg); color: var(--good); }
+  .result-note.bad { display: block; background: var(--bad-bg); color: var(--bad); }
+  .summary-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  .summary-table th, .summary-table td { border: 1px solid var(--border); padding: 9px; text-align: left; }
+  .summary-table th { background: #f8fafc; }
+  #resultBox { display: none; }
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    font-family: Consolas, monospace;
+  }
+  .sticky-submit {
+    position: sticky;
+    bottom: 0;
+    background: rgba(246,247,251,0.92);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--border);
+    padding: 12px 0;
+    margin-top: 20px;
+  }
+  .hide { display: none !important; }
+  @media (max-width: 760px) {
+    .toolbar { grid-template-columns: 1fr; }
+    h1 { font-size: 24px; }
+  }
+  @media print {
+    .toolbar, .button-row, .sticky-submit, #copyArea { display: none !important; }
+    body { background: white; }
+    .panel, details.chapter, .question-card { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Java / AP CS A Style Assessment</h1>
+    <p class="subtitle">For 8th-grade students with 6+ months of Java experience · 95 total questions · 5 questions per chapter</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="panel">
+    <div class="toolbar">
+      <div>
+        <label class="small" for="studentName">Student Name</label>
+        <input id="studentName" type="text" placeholder="Enter student name" />
+      </div>
+      <div>
+        <label class="small" for="chapterFilter">Chapter Filter</label>
+        <select id="chapterFilter">
+          <option value="all">All Chapters</option>
+        </select>
+      </div>
+      <div>
+        <label class="small" for="modeFilter">View</label>
+        <select id="modeFilter">
+          <option value="all">All Questions</option>
+          <option value="unanswered">Unanswered Only</option>
+        </select>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="pill" id="totalCount">95 Questions</span>
+      <span class="pill">Suggested Time: 90–110 minutes</span>
+      <span class="pill">AP CS A Style MCQ</span>
+      <span class="pill">Auto-Graded After Submit</span>
+    </div>
+    <div class="button-row">
+      <button onclick="gradeQuiz()">Submit / Grade</button>
+      <button class="secondary" onclick="expandAll(true)">Open All Chapters</button>
+      <button class="secondary" onclick="expandAll(false)">Close All Chapters</button>
+      <button class="light" onclick="resetQuiz()">Reset</button>
+      <button class="light" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </section>
+
+  <section id="resultBox" class="panel">
+    <h2>Score Report</h2>
+    <div id="scoreText"></div>
+    <div id="chapterScores"></div>
+    <div id="copyArea" style="margin-top:14px;">
+      <label class="small" for="resultText">Copy-Friendly Result Summary</label>
+      <textarea id="resultText" readonly></textarea>
+      <div class="button-row">
+        <button class="secondary" onclick="copyResult()">Copy Result</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz"></section>
+
+  <div class="sticky-submit">
+    <div class="wrap button-row" style="margin-top:0;">
+      <button onclick="gradeQuiz()">Submit / Grade</button>
+      <button class="light" onclick="scrollToTop()">Top</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const QUESTIONS = [
+  {
+    "chapter": "Java Intro",
+    "q": "Which idea best explains why Java programs can run on many different operating systems?",
+    "code": "",
+    "choices": [
+      "Java source code is translated into bytecode that runs on the JVM.",
+      "Java code is automatically converted into HTML.",
+      "Java programs run only inside a web browser.",
+      "Java code must be rewritten for every operating system."
+    ],
+    "answer": 0,
+    "explanation": "Java source code is compiled into bytecode. The JVM runs that bytecode on different systems."
+  },
+  {
+    "chapter": "Java Intro",
+    "q": "Which line is the standard starting point for a Java application?",
+    "code": "",
+    "choices": [
+      "public static void main(String[] args)",
+      "public void start(String args)",
+      "static main()",
+      "public class main(String[] args)"
+    ],
+    "answer": 0,
+    "explanation": "A typical Java application begins execution in public static void main(String[] args)."
+  },
+  {
+    "chapter": "Java Intro",
+    "q": "Which statement about Java is true?",
+    "code": "",
+    "choices": [
+      "Java is case-sensitive.",
+      "Java does not use data types.",
+      "Java never uses semicolons.",
+      "Java cannot define classes."
+    ],
+    "answer": 0,
+    "explanation": "Java is case-sensitive, so Score and score are different identifiers."
+  },
+  {
+    "chapter": "Java Intro",
+    "q": "A file named Game.java contains public class Game. What is usually created after successful compilation?",
+    "code": "",
+    "choices": [
+      "Game.class",
+      "Game.html",
+      "Game.exe only",
+      "Game.txt"
+    ],
+    "answer": 0,
+    "explanation": "javac Game.java creates bytecode in a .class file, usually Game.class."
+  },
+  {
+    "chapter": "Java Intro",
+    "q": "Which description best matches object-oriented programming in Java?",
+    "code": "",
+    "choices": [
+      "Programs are often organized using classes and objects.",
+      "Programs must contain only one long method.",
+      "Variables are not allowed.",
+      "All code must be written in binary."
+    ],
+    "answer": 0,
+    "explanation": "Java is object-oriented, so classes and objects are central ideas."
+  },
+  {
+    "chapter": "Java Get Started",
+    "q": "Which command compiles a Java source file named Main.java?",
+    "code": "",
+    "choices": [
+      "javac Main.java",
+      "java Main.java",
+      "compile Main",
+      "run Main.java"
+    ],
+    "answer": 0,
+    "explanation": "javac is the Java compiler. It compiles .java source files."
+  },
+  {
+    "chapter": "Java Get Started",
+    "q": "After compiling Main.java, which command usually runs the program?",
+    "code": "",
+    "choices": [
+      "java Main",
+      "java Main.java",
+      "javac Main",
+      "run Main.class"
+    ],
+    "answer": 0,
+    "explanation": "Use java Main to run the class named Main. Do not include .java or .class in the run command."
+  },
+  {
+    "chapter": "Java Get Started",
+    "q": "If a public class is named Robot, what should the file usually be named?",
+    "code": "public class Robot {\n    public static void main(String[] args) {\n        System.out.println(\"Go\");\n    }\n}",
+    "choices": [
+      "Robot.java",
+      "robot.txt",
+      "Main.java always",
+      "Robot.class.java"
+    ],
+    "answer": 0,
+    "explanation": "A public class name must match the source file name exactly, including capitalization."
+  },
+  {
+    "chapter": "Java Get Started",
+    "q": "What is the output of this program?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Java\");\n    }\n}",
+    "choices": [
+      "Java",
+      "\"Java\"",
+      "Main",
+      "No output"
+    ],
+    "answer": 0,
+    "explanation": "System.out.println prints the text inside the quotation marks, without printing the quotation marks."
+  },
+  {
+    "chapter": "Java Get Started",
+    "q": "Which mistake would most likely cause a compile-time error?",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hi\")\n    }\n}",
+    "choices": [
+      "The print statement is missing a semicolon.",
+      "The word public is illegal.",
+      "String[] args cannot be used.",
+      "The class has too many braces."
+    ],
+    "answer": 0,
+    "explanation": "Most Java statements must end with a semicolon."
+  },
+  {
+    "chapter": "Java Syntax",
+    "q": "In Java, what do curly braces { } usually show?",
+    "code": "",
+    "choices": [
+      "The beginning and end of a block of code",
+      "A string value",
+      "A single-line comment",
+      "A decimal number"
+    ],
+    "answer": 0,
+    "explanation": "Curly braces group statements into blocks, such as class bodies, method bodies, and loop bodies."
+  },
+  {
+    "chapter": "Java Syntax",
+    "q": "Which line is a valid Java statement?",
+    "code": "",
+    "choices": [
+      "int score = 10;",
+      "int score = 10",
+      "score int = 10;",
+      "int score == 10;"
+    ],
+    "answer": 0,
+    "explanation": "A variable declaration uses type name, variable name, assignment, value, and semicolon."
+  },
+  {
+    "chapter": "Java Syntax",
+    "q": "Which identifier is valid in Java?",
+    "code": "",
+    "choices": [
+      "studentScore",
+      "2score",
+      "class",
+      "student-score"
+    ],
+    "answer": 0,
+    "explanation": "Identifiers cannot start with a digit, cannot be keywords, and cannot contain a hyphen."
+  },
+  {
+    "chapter": "Java Syntax",
+    "q": "What is the output?",
+    "code": "System.out.println(\"A\");\nSystem.out.println(\"B\");\nSystem.out.print(\"C\");",
+    "choices": [
+      "A\nB\nC",
+      "ABC",
+      "A B C",
+      "A\nBC"
+    ],
+    "answer": 0,
+    "explanation": "println moves to the next line after printing. print does not."
+  },
+  {
+    "chapter": "Java Syntax",
+    "q": "Which pair of variables would Java treat as two different names?",
+    "code": "",
+    "choices": [
+      "total and Total",
+      "score and score",
+      "myValue and myValue",
+      "count and count"
+    ],
+    "answer": 0,
+    "explanation": "Java is case-sensitive, so total and Total are different identifiers."
+  },
+  {
+    "chapter": "Java Output",
+    "q": "What is the difference between print and println?",
+    "code": "",
+    "choices": [
+      "println moves to a new line after printing; print does not.",
+      "print can only print numbers.",
+      "println causes a compile error.",
+      "print automatically adds a space."
+    ],
+    "answer": 0,
+    "explanation": "System.out.println adds a line break after the output."
+  },
+  {
+    "chapter": "Java Output",
+    "q": "What is printed?",
+    "code": "System.out.print(\"Hi\");\nSystem.out.print(\"There\");",
+    "choices": [
+      "HiThere",
+      "Hi There",
+      "Hi\nThere",
+      "ThereHi"
+    ],
+    "answer": 0,
+    "explanation": "print does not add a space or line break automatically."
+  },
+  {
+    "chapter": "Java Output",
+    "q": "What is printed?",
+    "code": "System.out.println(3 + 4 + \" cats\");",
+    "choices": [
+      "7 cats",
+      "34 cats",
+      "3 + 4 cats",
+      "cats 7"
+    ],
+    "answer": 0,
+    "explanation": "Java evaluates 3 + 4 first, then concatenates the result with the string."
+  },
+  {
+    "chapter": "Java Output",
+    "q": "What is printed?",
+    "code": "System.out.println(\"cats \" + 3 + 4);",
+    "choices": [
+      "cats 34",
+      "cats 7",
+      "7 cats",
+      "cats 3 4"
+    ],
+    "answer": 0,
+    "explanation": "Once a string is involved, + performs string concatenation from left to right."
+  },
+  {
+    "chapter": "Java Output",
+    "q": "Which escape sequence represents a new line inside a string?",
+    "code": "",
+    "choices": [
+      "\\n",
+      "\\t",
+      "\\\"",
+      "\\\\"
+    ],
+    "answer": 0,
+    "explanation": "\\n represents a newline. \\t is a tab, \\\" is a quote, and \\\\ is a backslash."
+  },
+  {
+    "chapter": "Java Comments",
+    "q": "Which syntax creates a single-line comment in Java?",
+    "code": "",
+    "choices": [
+      "// comment",
+      "# comment",
+      "-- comment",
+      "<!-- comment -->"
+    ],
+    "answer": 0,
+    "explanation": "Java uses // for single-line comments."
+  },
+  {
+    "chapter": "Java Comments",
+    "q": "Which syntax creates a multi-line comment in Java?",
+    "code": "",
+    "choices": [
+      "/* comment */",
+      "// comment //",
+      "# comment #",
+      "<comment>"
+    ],
+    "answer": 0,
+    "explanation": "Java uses /* and */ for block comments."
+  },
+  {
+    "chapter": "Java Comments",
+    "q": "What is the output?",
+    "code": "System.out.print(\"A\");\n// System.out.print(\"B\");\nSystem.out.print(\"C\");",
+    "choices": [
+      "AC",
+      "ABC",
+      "A B C",
+      "A\nC"
+    ],
+    "answer": 0,
+    "explanation": "The commented-out line is ignored by the compiler."
+  },
+  {
+    "chapter": "Java Comments",
+    "q": "What is one good reason to write comments?",
+    "code": "",
+    "choices": [
+      "To explain the purpose of code to human readers",
+      "To make the program run faster",
+      "To replace all variable names",
+      "To avoid using methods"
+    ],
+    "answer": 0,
+    "explanation": "Comments help people understand the code; they do not change the program's behavior."
+  },
+  {
+    "chapter": "Java Comments",
+    "q": "What is a documentation comment often used for?",
+    "code": "/**\n * Returns the square of n.\n */",
+    "choices": [
+      "Generating documentation with tools such as Javadoc",
+      "Printing text to the screen",
+      "Creating a variable",
+      "Ending the program"
+    ],
+    "answer": 0,
+    "explanation": "Documentation comments begin with /** and are used by tools like Javadoc."
+  },
+  {
+    "chapter": "Java Variables",
+    "q": "What is the value of x after this code runs?",
+    "code": "int x = 5;\nx = x + 3;\nx = x * 2;",
+    "choices": [
+      "16",
+      "13",
+      "10",
+      "8"
+    ],
+    "answer": 0,
+    "explanation": "x becomes 8 after x + 3, then 16 after multiplying by 2."
+  },
+  {
+    "chapter": "Java Variables",
+    "q": "Which declaration correctly stores a decimal value?",
+    "code": "",
+    "choices": [
+      "double price = 4.99;",
+      "int price = 4.99;",
+      "boolean price = 4.99;",
+      "char price = 4.99;"
+    ],
+    "answer": 0,
+    "explanation": "double is used for decimal values."
+  },
+  {
+    "chapter": "Java Variables",
+    "q": "What is printed?",
+    "code": "int a = 2;\nint b = 5;\na = b;\nb = 9;\nSystem.out.println(a);",
+    "choices": [
+      "5",
+      "2",
+      "9",
+      "14"
+    ],
+    "answer": 0,
+    "explanation": "a gets the value of b at that time, which is 5. Later changing b does not change a."
+  },
+  {
+    "chapter": "Java Variables",
+    "q": "Which keyword makes a variable a constant that cannot be changed later?",
+    "code": "",
+    "choices": [
+      "final",
+      "static",
+      "public",
+      "void"
+    ],
+    "answer": 0,
+    "explanation": "final variables cannot be reassigned after they are initialized."
+  },
+  {
+    "chapter": "Java Variables",
+    "q": "Which line causes a compile-time error?",
+    "code": "int score = 10;\nscore = 12;\nString name = \"Mina\";\nscore = \"high\";",
+    "choices": [
+      "score = \"high\";",
+      "score = 12;",
+      "String name = \"Mina\";",
+      "int score = 10;"
+    ],
+    "answer": 0,
+    "explanation": "score is an int, so it cannot store a String value."
+  },
+  {
+    "chapter": "Java Data Types",
+    "q": "What is printed?",
+    "code": "int x = 7;\nint y = 2;\nSystem.out.println(x / y);",
+    "choices": [
+      "3",
+      "3.5",
+      "4",
+      "3.0"
+    ],
+    "answer": 0,
+    "explanation": "Integer division drops the decimal part, so 7 / 2 is 3."
+  },
+  {
+    "chapter": "Java Data Types",
+    "q": "Which type is best for true/false values?",
+    "code": "",
+    "choices": [
+      "boolean",
+      "int",
+      "char",
+      "double"
+    ],
+    "answer": 0,
+    "explanation": "boolean stores true or false."
+  },
+  {
+    "chapter": "Java Data Types",
+    "q": "Which line correctly declares a char?",
+    "code": "",
+    "choices": [
+      "char grade = 'A';",
+      "char grade = \"A\";",
+      "String grade = 'A';",
+      "char grade = A;"
+    ],
+    "answer": 0,
+    "explanation": "A char literal uses single quotation marks, such as 'A'."
+  },
+  {
+    "chapter": "Java Data Types",
+    "q": "What is printed?",
+    "code": "double a = 7;\nint b = 2;\nSystem.out.println(a / b);",
+    "choices": [
+      "3.5",
+      "3",
+      "4",
+      "3.0"
+    ],
+    "answer": 0,
+    "explanation": "Because a is a double, Java performs floating-point division."
+  },
+  {
+    "chapter": "Java Data Types",
+    "q": "Which type is best for storing a word or sentence?",
+    "code": "",
+    "choices": [
+      "String",
+      "char",
+      "boolean",
+      "int"
+    ],
+    "answer": 0,
+    "explanation": "String stores text such as words and sentences."
+  },
+  {
+    "chapter": "Java Type Casting",
+    "q": "What is printed?",
+    "code": "double x = 8.9;\nint y = (int) x;\nSystem.out.println(y);",
+    "choices": [
+      "8",
+      "9",
+      "8.9",
+      "Compile-time error"
+    ],
+    "answer": 0,
+    "explanation": "Casting a double to an int truncates the decimal part. It does not round."
+  },
+  {
+    "chapter": "Java Type Casting",
+    "q": "What is printed?",
+    "code": "int a = 5;\nint b = 2;\ndouble result = (double) a / b;\nSystem.out.println(result);",
+    "choices": [
+      "2.5",
+      "2.0",
+      "2",
+      "3.0"
+    ],
+    "answer": 0,
+    "explanation": "Casting a to double makes the division floating-point division."
+  },
+  {
+    "chapter": "Java Type Casting",
+    "q": "What is printed?",
+    "code": "int a = 5;\nint b = 2;\ndouble result = (double) (a / b);\nSystem.out.println(result);",
+    "choices": [
+      "2.0",
+      "2.5",
+      "3.0",
+      "2"
+    ],
+    "answer": 0,
+    "explanation": "a / b is done first as integer division, giving 2. Then 2 is cast to 2.0."
+  },
+  {
+    "chapter": "Java Type Casting",
+    "q": "Which assignment is a widening conversion and does not need an explicit cast?",
+    "code": "",
+    "choices": [
+      "double x = 4;",
+      "int x = 4.8;",
+      "int x = (int) 4.8;",
+      "char x = \"A\";"
+    ],
+    "answer": 0,
+    "explanation": "An int value can be assigned to a double variable automatically."
+  },
+  {
+    "chapter": "Java Type Casting",
+    "q": "What is printed?",
+    "code": "System.out.println((int) 3.99 + 2);",
+    "choices": [
+      "5",
+      "5.99",
+      "6",
+      "3"
+    ],
+    "answer": 0,
+    "explanation": "(int) 3.99 becomes 3, and 3 + 2 is 5."
+  },
+  {
+    "chapter": "Java Operators",
+    "q": "What is printed?",
+    "code": "System.out.println(2 + 3 * 4);",
+    "choices": [
+      "14",
+      "20",
+      "24",
+      "9"
+    ],
+    "answer": 0,
+    "explanation": "Multiplication happens before addition, so 3 * 4 is 12, then 2 + 12 is 14."
+  },
+  {
+    "chapter": "Java Operators",
+    "q": "What is printed?",
+    "code": "System.out.println(17 % 5);",
+    "choices": [
+      "2",
+      "3",
+      "5",
+      "12"
+    ],
+    "answer": 0,
+    "explanation": "17 divided by 5 leaves a remainder of 2."
+  },
+  {
+    "chapter": "Java Operators",
+    "q": "What is the value of x after this code?",
+    "code": "int x = 10;\nx += 4;\nx *= 2;",
+    "choices": [
+      "28",
+      "24",
+      "18",
+      "14"
+    ],
+    "answer": 0,
+    "explanation": "x += 4 makes x 14. Then x *= 2 makes x 28."
+  },
+  {
+    "chapter": "Java Operators",
+    "q": "What is printed?",
+    "code": "int x = 3;\nx++;\n++x;\nSystem.out.println(x);",
+    "choices": [
+      "5",
+      "3",
+      "4",
+      "6"
+    ],
+    "answer": 0,
+    "explanation": "Both x++ and ++x increase x by 1, so x becomes 5."
+  },
+  {
+    "chapter": "Java Operators",
+    "q": "Which expression is true when x is at least 10 and less than 20?",
+    "code": "",
+    "choices": [
+      "x >= 10 && x < 20",
+      "x > 10 || x < 20",
+      "10 >= x && 20 < x",
+      "x >= 10 && x > 20"
+    ],
+    "answer": 0,
+    "explanation": "Both conditions must be true, so && is the correct operator."
+  },
+  {
+    "chapter": "Java Strings",
+    "q": "What is printed?",
+    "code": "String s = \"computer\";\nSystem.out.println(s.length());",
+    "choices": [
+      "8",
+      "7",
+      "9",
+      "computer"
+    ],
+    "answer": 0,
+    "explanation": "computer has 8 characters."
+  },
+  {
+    "chapter": "Java Strings",
+    "q": "What is printed?",
+    "code": "String s = \"program\";\nSystem.out.println(s.substring(1, 4));",
+    "choices": [
+      "rog",
+      "rogr",
+      "pro",
+      "ogr"
+    ],
+    "answer": 0,
+    "explanation": "substring(1, 4) includes indexes 1, 2, and 3, but not 4."
+  },
+  {
+    "chapter": "Java Strings",
+    "q": "What is printed?",
+    "code": "String s = \"banana\";\nSystem.out.println(s.indexOf(\"na\"));",
+    "choices": [
+      "2",
+      "1",
+      "3",
+      "-1"
+    ],
+    "answer": 0,
+    "explanation": "The first occurrence of \"na\" starts at index 2."
+  },
+  {
+    "chapter": "Java Strings",
+    "q": "Which expression correctly checks whether two String objects contain the same text?",
+    "code": "",
+    "choices": [
+      "a.equals(b)",
+      "a == b",
+      "a = b",
+      "a.compare(b)"
+    ],
+    "answer": 0,
+    "explanation": "Use equals to compare String contents. == checks whether two references are the same object."
+  },
+  {
+    "chapter": "Java Strings",
+    "q": "What is printed?",
+    "code": "String word = \"Java\";\nword = word + \"!\";\nSystem.out.println(word);",
+    "choices": [
+      "Java!",
+      "Java",
+      "!Java",
+      "word!"
+    ],
+    "answer": 0,
+    "explanation": "String concatenation creates the text Java!."
+  },
+  {
+    "chapter": "Java Math",
+    "q": "What is printed?",
+    "code": "System.out.println(Math.abs(-12));",
+    "choices": [
+      "12",
+      "-12",
+      "0",
+      "144"
+    ],
+    "answer": 0,
+    "explanation": "Math.abs returns the absolute value."
+  },
+  {
+    "chapter": "Java Math",
+    "q": "What is printed?",
+    "code": "System.out.println(Math.max(7, 3));",
+    "choices": [
+      "7",
+      "3",
+      "10",
+      "4"
+    ],
+    "answer": 0,
+    "explanation": "Math.max returns the larger of the two values."
+  },
+  {
+    "chapter": "Java Math",
+    "q": "What is the type of the value returned by Math.pow(2, 3)?",
+    "code": "",
+    "choices": [
+      "double",
+      "int",
+      "boolean",
+      "String"
+    ],
+    "answer": 0,
+    "explanation": "Math.pow returns a double, even when the result looks like a whole number."
+  },
+  {
+    "chapter": "Java Math",
+    "q": "Which expression generates an int from 1 through 6, inclusive?",
+    "code": "",
+    "choices": [
+      "(int)(Math.random() * 6) + 1",
+      "(int)(Math.random() * 6)",
+      "(int)(Math.random() + 6)",
+      "Math.random(1, 6)"
+    ],
+    "answer": 0,
+    "explanation": "Math.random() gives a double in [0.0, 1.0). Multiplying by 6 gives 0 through less than 6; casting gives 0-5; adding 1 gives 1-6."
+  },
+  {
+    "chapter": "Java Math",
+    "q": "What is printed?",
+    "code": "System.out.println((int) Math.sqrt(20));",
+    "choices": [
+      "4",
+      "5",
+      "4.47",
+      "20"
+    ],
+    "answer": 0,
+    "explanation": "Math.sqrt(20) is about 4.47, and casting to int truncates it to 4."
+  },
+  {
+    "chapter": "Java Booleans",
+    "q": "What is printed?",
+    "code": "int x = 8;\nSystem.out.println(x > 5 && x < 10);",
+    "choices": [
+      "true",
+      "false",
+      "8",
+      "Compile-time error"
+    ],
+    "answer": 0,
+    "explanation": "Both x > 5 and x < 10 are true, so the whole expression is true."
+  },
+  {
+    "chapter": "Java Booleans",
+    "q": "What is printed?",
+    "code": "boolean a = true;\nboolean b = false;\nSystem.out.println(a || b);",
+    "choices": [
+      "true",
+      "false",
+      "0",
+      "1"
+    ],
+    "answer": 0,
+    "explanation": "OR is true if at least one side is true."
+  },
+  {
+    "chapter": "Java Booleans",
+    "q": "What is equivalent to !(x < 3)?",
+    "code": "",
+    "choices": [
+      "x >= 3",
+      "x > 3",
+      "x <= 3",
+      "x == 3"
+    ],
+    "answer": 0,
+    "explanation": "The opposite of less than 3 is greater than or equal to 3."
+  },
+  {
+    "chapter": "Java Booleans",
+    "q": "What is printed?",
+    "code": "int x = 4;\nint y = 9;\nSystem.out.println(x == 4 && y != 9);",
+    "choices": [
+      "false",
+      "true",
+      "4",
+      "9"
+    ],
+    "answer": 0,
+    "explanation": "x == 4 is true, but y != 9 is false. true && false is false."
+  },
+  {
+    "chapter": "Java Booleans",
+    "q": "Which expression is true exactly when n is even?",
+    "code": "",
+    "choices": [
+      "n % 2 == 0",
+      "n / 2 == 0",
+      "n % 2 == 1",
+      "n == 2"
+    ],
+    "answer": 0,
+    "explanation": "An even integer has remainder 0 when divided by 2."
+  },
+  {
+    "chapter": "Java If...Else",
+    "q": "What is printed?",
+    "code": "int score = 82;\nif (score >= 90) {\n    System.out.println(\"A\");\n} else if (score >= 80) {\n    System.out.println(\"B\");\n} else {\n    System.out.println(\"C\");\n}",
+    "choices": [
+      "B",
+      "A",
+      "C",
+      "No output"
+    ],
+    "answer": 0,
+    "explanation": "82 is not at least 90, but it is at least 80, so B is printed."
+  },
+  {
+    "chapter": "Java If...Else",
+    "q": "What is printed?",
+    "code": "int x = 5;\nif (x > 3)\n    System.out.print(\"A\");\nSystem.out.print(\"B\");",
+    "choices": [
+      "AB",
+      "A",
+      "B",
+      "No output"
+    ],
+    "answer": 0,
+    "explanation": "Only the first print is controlled by the if. The second print always runs."
+  },
+  {
+    "chapter": "Java If...Else",
+    "q": "What is printed?",
+    "code": "int x = 4;\nif (x % 2 == 0) {\n    if (x > 10) {\n        System.out.println(\"large even\");\n    } else {\n        System.out.println(\"small even\");\n    }\n} else {\n    System.out.println(\"odd\");\n}",
+    "choices": [
+      "small even",
+      "large even",
+      "odd",
+      "No output"
+    ],
+    "answer": 0,
+    "explanation": "4 is even, but it is not greater than 10."
+  },
+  {
+    "chapter": "Java If...Else",
+    "q": "Which condition correctly checks whether age is between 13 and 19, inclusive?",
+    "code": "",
+    "choices": [
+      "age >= 13 && age <= 19",
+      "13 <= age <= 19",
+      "age >= 13 || age <= 19",
+      "age > 13 && age < 19"
+    ],
+    "answer": 0,
+    "explanation": "Java does not allow chained comparisons like 13 <= age <= 19. Use &&."
+  },
+  {
+    "chapter": "Java If...Else",
+    "q": "What is printed?",
+    "code": "String answer = \"yes\";\nif (answer.equals(\"yes\")) {\n    System.out.println(\"Start\");\n} else {\n    System.out.println(\"Stop\");\n}",
+    "choices": [
+      "Start",
+      "Stop",
+      "yes",
+      "No output"
+    ],
+    "answer": 0,
+    "explanation": "equals compares the text of the String, so the condition is true."
+  },
+  {
+    "chapter": "Java Switch",
+    "q": "What is printed?",
+    "code": "int day = 2;\nswitch (day) {\n    case 1:\n        System.out.print(\"Mon\");\n        break;\n    case 2:\n        System.out.print(\"Tue\");\n        break;\n    default:\n        System.out.print(\"Other\");\n}",
+    "choices": [
+      "Tue",
+      "Mon",
+      "Other",
+      "TueOther"
+    ],
+    "answer": 0,
+    "explanation": "day matches case 2, and break exits the switch."
+  },
+  {
+    "chapter": "Java Switch",
+    "q": "What is printed?",
+    "code": "int x = 3;\nswitch (x) {\n    case 1:\n        System.out.print(\"A\");\n        break;\n    case 2:\n        System.out.print(\"B\");\n        break;\n    default:\n        System.out.print(\"C\");\n}",
+    "choices": [
+      "C",
+      "A",
+      "B",
+      "No output"
+    ],
+    "answer": 0,
+    "explanation": "No case matches 3, so default runs."
+  },
+  {
+    "chapter": "Java Switch",
+    "q": "What happens when a matching case does not have a break statement?",
+    "code": "",
+    "choices": [
+      "Execution may continue into the next case.",
+      "The program always crashes.",
+      "The switch starts over from the top.",
+      "The default case is skipped forever."
+    ],
+    "answer": 0,
+    "explanation": "Without break, switch cases can fall through into following cases."
+  },
+  {
+    "chapter": "Java Switch",
+    "q": "What is printed?",
+    "code": "int n = 1;\nswitch (n) {\n    case 1:\n        System.out.print(\"A\");\n    case 2:\n        System.out.print(\"B\");\n        break;\n    default:\n        System.out.print(\"C\");\n}",
+    "choices": [
+      "AB",
+      "A",
+      "ABC",
+      "B"
+    ],
+    "answer": 0,
+    "explanation": "case 1 runs, then falls through into case 2 until the break."
+  },
+  {
+    "chapter": "Java Switch",
+    "q": "Which type can be used in a standard switch expression in Java?",
+    "code": "",
+    "choices": [
+      "String",
+      "double",
+      "boolean",
+      "ArrayList<Integer>"
+    ],
+    "answer": 0,
+    "explanation": "String can be used in switch statements. double and boolean are not standard switch expression types."
+  },
+  {
+    "chapter": "Java While Loop",
+    "q": "What is printed?",
+    "code": "int i = 1;\nwhile (i <= 3) {\n    System.out.print(i);\n    i++;\n}",
+    "choices": [
+      "123",
+      "0123",
+      "1234",
+      "111"
+    ],
+    "answer": 0,
+    "explanation": "The loop prints 1, 2, and 3, then stops when i becomes 4."
+  },
+  {
+    "chapter": "Java While Loop",
+    "q": "How many times does the loop body run?",
+    "code": "int x = 10;\nwhile (x > 0) {\n    x -= 3;\n}",
+    "choices": [
+      "4",
+      "3",
+      "5",
+      "10"
+    ],
+    "answer": 0,
+    "explanation": "x becomes 7, 4, 1, -2. The body runs 4 times."
+  },
+  {
+    "chapter": "Java While Loop",
+    "q": "What is printed?",
+    "code": "int sum = 0;\nint n = 1;\nwhile (n <= 4) {\n    sum += n;\n    n++;\n}\nSystem.out.println(sum);",
+    "choices": [
+      "10",
+      "6",
+      "4",
+      "15"
+    ],
+    "answer": 0,
+    "explanation": "The loop adds 1 + 2 + 3 + 4, which is 10."
+  },
+  {
+    "chapter": "Java While Loop",
+    "q": "Which change would most likely cause an infinite loop?",
+    "code": "int i = 1;\nwhile (i <= 5) {\n    System.out.println(i);\n    i++;\n}",
+    "choices": [
+      "Removing i++;",
+      "Changing 5 to 10",
+      "Changing println to print",
+      "Starting i at 0"
+    ],
+    "answer": 0,
+    "explanation": "If i never changes, i <= 5 will remain true forever."
+  },
+  {
+    "chapter": "Java While Loop",
+    "q": "What is printed?",
+    "code": "int count = 0;\nint x = 1;\nwhile (x < 20) {\n    x *= 2;\n    count++;\n}\nSystem.out.println(count);",
+    "choices": [
+      "5",
+      "4",
+      "6",
+      "20"
+    ],
+    "answer": 0,
+    "explanation": "x becomes 2, 4, 8, 16, 32. That takes 5 loop iterations."
+  },
+  {
+    "chapter": "Java For Loop",
+    "q": "What is printed?",
+    "code": "for (int i = 0; i < 4; i++) {\n    System.out.print(i);\n}",
+    "choices": [
+      "0123",
+      "1234",
+      "01234",
+      "1111"
+    ],
+    "answer": 0,
+    "explanation": "i takes the values 0, 1, 2, and 3."
+  },
+  {
+    "chapter": "Java For Loop",
+    "q": "How many times does the loop body run?",
+    "code": "for (int i = 5; i >= 1; i--) {\n    System.out.print(i);\n}",
+    "choices": [
+      "5",
+      "4",
+      "6",
+      "1"
+    ],
+    "answer": 0,
+    "explanation": "The values are 5, 4, 3, 2, and 1, so the body runs 5 times."
+  },
+  {
+    "chapter": "Java For Loop",
+    "q": "What is printed?",
+    "code": "int sum = 0;\nfor (int i = 2; i <= 6; i += 2) {\n    sum += i;\n}\nSystem.out.println(sum);",
+    "choices": [
+      "12",
+      "8",
+      "6",
+      "20"
+    ],
+    "answer": 0,
+    "explanation": "The loop adds 2 + 4 + 6, which is 12."
+  },
+  {
+    "chapter": "Java For Loop",
+    "q": "What is printed?",
+    "code": "for (int r = 1; r <= 2; r++) {\n    for (int c = 1; c <= 3; c++) {\n        System.out.print(\"*\");\n    }\n}\n",
+    "choices": [
+      "******",
+      "***",
+      "**",
+      "********"
+    ],
+    "answer": 0,
+    "explanation": "The outer loop runs 2 times and the inner loop prints 3 stars each time, for 6 stars total."
+  },
+  {
+    "chapter": "Java For Loop",
+    "q": "Which for loop prints the even numbers 2, 4, 6, 8?",
+    "code": "",
+    "choices": [
+      "for (int i = 2; i <= 8; i += 2)",
+      "for (int i = 2; i < 8; i += 2)",
+      "for (int i = 1; i <= 8; i += 2)",
+      "for (int i = 8; i <= 2; i += 2)"
+    ],
+    "answer": 0,
+    "explanation": "Starting at 2, continuing through 8, and increasing by 2 gives 2, 4, 6, 8."
+  },
+  {
+    "chapter": "Java Break/Continue",
+    "q": "What is printed?",
+    "code": "for (int i = 1; i <= 5; i++) {\n    if (i == 3) {\n        break;\n    }\n    System.out.print(i);\n}",
+    "choices": [
+      "12",
+      "123",
+      "1245",
+      "12345"
+    ],
+    "answer": 0,
+    "explanation": "break stops the loop when i is 3, before 3 is printed."
+  },
+  {
+    "chapter": "Java Break/Continue",
+    "q": "What is printed?",
+    "code": "for (int i = 1; i <= 5; i++) {\n    if (i == 3) {\n        continue;\n    }\n    System.out.print(i);\n}",
+    "choices": [
+      "1245",
+      "12",
+      "12345",
+      "345"
+    ],
+    "answer": 0,
+    "explanation": "continue skips the rest of the current iteration, so 3 is not printed."
+  },
+  {
+    "chapter": "Java Break/Continue",
+    "q": "In a nested loop, what does an unlabeled break usually exit?",
+    "code": "",
+    "choices": [
+      "Only the nearest enclosing loop",
+      "All loops in the program",
+      "Only the if statement",
+      "The entire Java program"
+    ],
+    "answer": 0,
+    "explanation": "An unlabeled break exits the closest loop or switch that contains it."
+  },
+  {
+    "chapter": "Java Break/Continue",
+    "q": "What is printed?",
+    "code": "for (int i = 1; i <= 3; i++) {\n    for (int j = 1; j <= 3; j++) {\n        if (j == 2) {\n            break;\n        }\n        System.out.print(i + \"\" + j + \" \" );\n    }\n}",
+    "choices": [
+      "11 21 31 ",
+      "11 12 13 21 22 23 31 32 33 ",
+      "12 22 32 ",
+      "11 13 21 23 31 33 "
+    ],
+    "answer": 0,
+    "explanation": "For each i, j starts at 1 and prints i1. When j becomes 2, the inner loop breaks."
+  },
+  {
+    "chapter": "Java Break/Continue",
+    "q": "Which statement best describes continue?",
+    "code": "",
+    "choices": [
+      "It skips the rest of the current loop iteration and moves to the next iteration.",
+      "It immediately ends the whole program.",
+      "It permanently deletes the loop variable.",
+      "It always exits all nested loops."
+    ],
+    "answer": 0,
+    "explanation": "continue does not end the loop completely; it moves to the next iteration."
+  },
+  {
+    "chapter": "Java Arrays",
+    "q": "What is printed?",
+    "code": "int[] nums = {4, 7, 9};\nSystem.out.println(nums[1]);",
+    "choices": [
+      "7",
+      "4",
+      "9",
+      "1"
+    ],
+    "answer": 0,
+    "explanation": "Array indexes start at 0, so nums[1] is the second element, 7."
+  },
+  {
+    "chapter": "Java Arrays",
+    "q": "What is printed?",
+    "code": "int[] nums = {2, 4, 6, 8};\nSystem.out.println(nums.length);",
+    "choices": [
+      "4",
+      "3",
+      "8",
+      "length"
+    ],
+    "answer": 0,
+    "explanation": "The array has 4 elements."
+  },
+  {
+    "chapter": "Java Arrays",
+    "q": "What is printed?",
+    "code": "int[] a = {1, 2, 3};\na[0] = a[2] + 5;\nSystem.out.println(a[0]);",
+    "choices": [
+      "8",
+      "1",
+      "3",
+      "6"
+    ],
+    "answer": 0,
+    "explanation": "a[2] is 3, so a[0] becomes 3 + 5 = 8."
+  },
+  {
+    "chapter": "Java Arrays",
+    "q": "Which loop correctly visits every valid index of arr?",
+    "code": "int[] arr = {5, 10, 15};",
+    "choices": [
+      "for (int i = 0; i < arr.length; i++)",
+      "for (int i = 1; i <= arr.length; i++)",
+      "for (int i = 0; i <= arr.length; i++)",
+      "for (int i = arr.length; i >= 0; i++)"
+    ],
+    "answer": 0,
+    "explanation": "Valid indexes are 0 through arr.length - 1."
+  },
+  {
+    "chapter": "Java Arrays",
+    "q": "What is printed?",
+    "code": "int[] nums = {3, 1, 4};\nint sum = 0;\nfor (int n : nums) {\n    sum += n;\n}\nSystem.out.println(sum);",
+    "choices": [
+      "8",
+      "314",
+      "4",
+      "3"
+    ],
+    "answer": 0,
+    "explanation": "The enhanced for loop adds 3 + 1 + 4, which is 8."
+  },
+  {
+    "chapter": "ArrayList",
+    "q": "Which import is usually needed to use ArrayList?",
+    "code": "",
+    "choices": [
+      "import java.util.ArrayList;",
+      "import java.array.ArrayList;",
+      "import java.lang.ArrayList;",
+      "import ArrayList.java;"
+    ],
+    "answer": 0,
+    "explanation": "ArrayList is in the java.util package."
+  },
+  {
+    "chapter": "ArrayList",
+    "q": "What is printed?",
+    "code": "ArrayList<String> names = new ArrayList<String>();\nnames.add(\"Amy\");\nnames.add(\"Ben\");\nSystem.out.println(names.get(1));",
+    "choices": [
+      "Ben",
+      "Amy",
+      "1",
+      "Compile-time error"
+    ],
+    "answer": 0,
+    "explanation": "ArrayList indexes start at 0, so index 1 stores Ben."
+  },
+  {
+    "chapter": "ArrayList",
+    "q": "What is printed?",
+    "code": "ArrayList<Integer> nums = new ArrayList<Integer>();\nnums.add(10);\nnums.add(20);\nnums.add(1, 15);\nSystem.out.println(nums);",
+    "choices": [
+      "[10, 15, 20]",
+      "[15, 10, 20]",
+      "[10, 20, 15]",
+      "[10, 15]"
+    ],
+    "answer": 0,
+    "explanation": "add(1, 15) inserts 15 at index 1 and shifts 20 to the right."
+  },
+  {
+    "chapter": "ArrayList",
+    "q": "What is printed?",
+    "code": "ArrayList<Integer> nums = new ArrayList<Integer>();\nnums.add(3);\nnums.add(6);\nnums.add(9);\nnums.remove(1);\nSystem.out.println(nums.size());",
+    "choices": [
+      "2",
+      "3",
+      "1",
+      "6"
+    ],
+    "answer": 0,
+    "explanation": "Removing the item at index 1 leaves two elements."
+  },
+  {
+    "chapter": "ArrayList",
+    "q": "Which line correctly changes the first element of list to \"red\"?",
+    "code": "ArrayList<String> list = new ArrayList<String>();\nlist.add(\"blue\");",
+    "choices": [
+      "list.set(0, \"red\");",
+      "list[0] = \"red\";",
+      "list.change(0, \"red\");",
+      "list.add(0) = \"red\";"
+    ],
+    "answer": 0,
+    "explanation": "ArrayList uses set(index, value) to replace an existing element."
+  }
+];
+
+const quizEl = document.getElementById('quiz');
+const chapterFilter = document.getElementById('chapterFilter');
+const modeFilter = document.getElementById('modeFilter');
+const chapters = [...new Set(QUESTIONS.map(q => q.chapter))];
+
+function escapeText(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function initFilters() {
+  chapters.forEach(ch => {
+    const opt = document.createElement('option');
+    opt.value = ch;
+    opt.textContent = ch;
+    chapterFilter.appendChild(opt);
+  });
+  chapterFilter.addEventListener('change', renderQuiz);
+  modeFilter.addEventListener('change', renderQuiz);
+}
+
+function getAnswer(index) {
+  const checked = document.querySelector(`input[name="q${index}"]:checked`);
+  return checked ? Number(checked.value) : null;
+}
+
+function renderQuiz() {
+  const selectedChapter = chapterFilter.value;
+  const mode = modeFilter.value;
+  quizEl.innerHTML = '';
+  chapters.forEach((chapter, chapterIndex) => {
+    if (selectedChapter !== 'all' && selectedChapter !== chapter) return;
+    const chapterQuestions = QUESTIONS
+      .map((q, originalIndex) => ({...q, originalIndex}))
+      .filter(q => q.chapter === chapter)
+      .filter(q => mode !== 'unanswered' || getAnswer(q.originalIndex) === null);
+    if (chapterQuestions.length === 0) return;
+
+    const details = document.createElement('details');
+    details.className = 'chapter';
+    details.open = selectedChapter !== 'all' || chapterIndex < 2;
+    const summary = document.createElement('summary');
+    summary.textContent = `${chapter} (${chapterQuestions.length} questions)`;
+    details.appendChild(summary);
+
+    const body = document.createElement('div');
+    body.className = 'chapter-body';
+
+    chapterQuestions.forEach((q) => {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = `card-${q.originalIndex}`;
+      const num = q.originalIndex + 1;
+      let html = `<div class="question-title">Q${num}. ${escapeText(q.q)}</div>`;
+      if (q.code && q.code.trim()) {
+        html += `<pre>${escapeText(q.code)}</pre>`;
+      }
+      html += `<div class="choices">`;
+      q.choices.forEach((choice, cIndex) => {
+        const checked = getAnswer(q.originalIndex) === cIndex ? 'checked' : '';
+        html += `
+          <label class="choice">
+            <input type="radio" name="q${q.originalIndex}" value="${cIndex}" ${checked} />
+            <span>${String.fromCharCode(65 + cIndex)}. ${escapeText(choice)}</span>
+          </label>`;
+      });
+      html += `</div><div class="result-note" id="note-${q.originalIndex}"></div>`;
+      card.innerHTML = html;
+      body.appendChild(card);
+    });
+
+    details.appendChild(body);
+    quizEl.appendChild(details);
+  });
+}
+
+function gradeQuiz() {
+  let correct = 0;
+  let answered = 0;
+  const chapterStats = {};
+  chapters.forEach(ch => chapterStats[ch] = {correct: 0, total: 0});
+
+  QUESTIONS.forEach((q, index) => {
+    const selected = getAnswer(index);
+    chapterStats[q.chapter].total++;
+    const card = document.getElementById(`card-${index}`);
+    const note = document.getElementById(`note-${index}`);
+    if (selected !== null) answered++;
+    const isCorrect = selected === q.answer;
+    if (isCorrect) {
+      correct++;
+      chapterStats[q.chapter].correct++;
+    }
+    if (card && note) {
+      card.classList.remove('correct-card', 'wrong-card');
+      note.classList.remove('good', 'bad');
+      if (isCorrect) {
+        card.classList.add('correct-card');
+        note.classList.add('good');
+        note.textContent = `Correct. ${q.explanation}`;
+      } else {
+        card.classList.add('wrong-card');
+        note.classList.add('bad');
+        const chosenText = selected === null ? 'No answer selected' : `${String.fromCharCode(65 + selected)}. ${q.choices[selected]}`;
+        note.textContent = `Incorrect. Your answer: ${chosenText}. Correct answer: ${String.fromCharCode(65 + q.answer)}. ${q.choices[q.answer]}. ${q.explanation}`;
+      }
+    }
+  });
+
+  const percent = Math.round((correct / QUESTIONS.length) * 100);
+  document.getElementById('resultBox').style.display = 'block';
+  document.getElementById('scoreText').innerHTML = `<h3>Total Score: ${correct} / ${QUESTIONS.length} (${percent}%)</h3><p>Answered: ${answered} / ${QUESTIONS.length}</p>`;
+
+  let table = '<table class="summary-table"><thead><tr><th>Chapter</th><th>Score</th><th>Percent</th></tr></thead><tbody>';
+  chapters.forEach(ch => {
+    const s = chapterStats[ch];
+    const p = Math.round((s.correct / s.total) * 100);
+    table += `<tr><td>${escapeText(ch)}</td><td>${s.correct} / ${s.total}</td><td>${p}%</td></tr>`;
+  });
+  table += '</tbody></table>';
+  document.getElementById('chapterScores').innerHTML = table;
+
+  const name = document.getElementById('studentName').value.trim() || 'Student';
+  let summary = `Java / AP CS A Style Assessment Result
+Student: ${name}
+Total Score: ${correct} / ${QUESTIONS.length} (${percent}%)
+Answered: ${answered} / ${QUESTIONS.length}
+
+Chapter Scores:
+`;
+  chapters.forEach(ch => {
+    const s = chapterStats[ch];
+    const p = Math.round((s.correct / s.total) * 100);
+    summary += `- ${ch}: ${s.correct} / ${s.total} (${p}%)
+`;
+  });
+  document.getElementById('resultText').value = summary;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetQuiz() {
+  if (!confirm('Reset all answers?')) return;
+  document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+  document.querySelectorAll('.question-card').forEach(card => card.classList.remove('correct-card', 'wrong-card'));
+  document.querySelectorAll('.result-note').forEach(note => {
+    note.className = 'result-note';
+    note.textContent = '';
+  });
+  document.getElementById('resultBox').style.display = 'none';
+  renderQuiz();
+}
+
+function expandAll(open) {
+  document.querySelectorAll('details.chapter').forEach(d => d.open = open);
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyResult() {
+  const area = document.getElementById('resultText');
+  area.select();
+  document.execCommand('copy');
+  alert('Result copied.');
+}
+
+initFilters();
+renderQuiz();
+</script>
+</body>
+</html>
