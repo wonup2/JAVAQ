@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Java Code Tracing Assessment</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f3f5f7; color:#1f2937; margin:0; }
+  header { background:#102a43; color:white; padding:28px 18px; text-align:center; }
+  header h1 { margin:0 0 8px 0; font-size:28px; }
+  main { max-width:980px; margin:24px auto; padding:0 16px 40px; }
+  .instructions, .results { background:white; border-radius:14px; padding:18px; box-shadow:0 2px 10px rgba(0,0,0,.08); margin-bottom:18px; }
+  .question { background:white; border-radius:14px; padding:18px; margin:16px 0; box-shadow:0 2px 10px rgba(0,0,0,.08); }
+  .topic { color:#52616b; font-size:13px; font-weight:bold; text-transform:uppercase; letter-spacing:.04em; }
+  pre { background:#111827; color:#f9fafb; padding:14px; border-radius:10px; overflow:auto; font-size:14px; line-height:1.45; }
+  label { display:block; margin:8px 0; padding:10px 12px; border:1px solid #d7dee8; border-radius:10px; cursor:pointer; }
+  label:hover { background:#f8fafc; }
+  button { background:#2563eb; color:white; border:none; padding:13px 18px; border-radius:10px; font-size:16px; cursor:pointer; margin:8px 8px 8px 0; }
+  button.secondary { background:#475569; }
+  .correct { border-color:#16a34a; background:#ecfdf5; }
+  .incorrect { border-color:#dc2626; background:#fef2f2; }
+  .explanation { display:none; margin-top:10px; background:#f8fafc; padding:10px; border-left:4px solid #64748b; border-radius:6px; }
+  .scoreLine { font-size:20px; font-weight:bold; }
+  table { width:100%; border-collapse:collapse; margin-top:12px; }
+  th, td { border:1px solid #e5e7eb; padding:8px; text-align:left; }
+  th { background:#f1f5f9; }
+  @media print { button { display:none; } body { background:white; } .question, .instructions, .results { box-shadow:none; border:1px solid #ddd; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Java AP CS A Style Code Tracing Assessment</h1>
+  <p>20 questions - loops, arrays, ArrayList, strings, and logic</p>
+</header>
+<main>
+<section class="instructions">
+  <p><strong>Instructions:</strong> Choose the answer that shows exactly what is printed. Assume <code>import java.util.*;</code> and <code>import java.util.Arrays;</code> are available when needed. Assume each code segment is inside a valid <code>main</code> method unless another method is shown.</p>
+  <p><strong>Suggested time:</strong> 40 to 50 minutes.</p>
+</section>
+
+<section class="question" id="q1">
+<div class="topic">Question 1 - Loops</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int sum = 0;
+for (int i = 1; i &lt;= 6; i++) {
+    if (i % 2 == 0) {
+        sum += i;
+    } else {
+        sum -= 1;
+    }
+}
+System.out.println(sum);</code></pre>
+<label><input type="radio" name="q1" value="A"> A. 6</label>
+<label><input type="radio" name="q1" value="B"> B. 8</label>
+<label><input type="radio" name="q1" value="C"> C. 9</label>
+<label><input type="radio" name="q1" value="D"> D. 12</label>
+<div class="explanation" id="exp1"></div>
+</section>
+<section class="question" id="q2">
+<div class="topic">Question 2 - Loops</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int x = 2;
+for (int i = 0; i &lt; 4; i++) {
+    x = x * 2 - i;
+}
+System.out.println(x);</code></pre>
+<label><input type="radio" name="q2" value="A"> A. 16</label>
+<label><input type="radio" name="q2" value="B"> B. 18</label>
+<label><input type="radio" name="q2" value="C"> C. 20</label>
+<label><input type="radio" name="q2" value="D"> D. 21</label>
+<div class="explanation" id="exp2"></div>
+</section>
+<section class="question" id="q3">
+<div class="topic">Question 3 - Nested Loops and Logic</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int count = 0;
+for (int i = 1; i &lt;= 3; i++) {
+    for (int j = 1; j &lt;= 4; j++) {
+        if ((i + j) % 2 == 0) {
+            count++;
+        }
+    }
+}
+System.out.println(count);</code></pre>
+<label><input type="radio" name="q3" value="A"> A. 4</label>
+<label><input type="radio" name="q3" value="B"> B. 5</label>
+<label><input type="radio" name="q3" value="C"> C. 6</label>
+<label><input type="radio" name="q3" value="D"> D. 7</label>
+<div class="explanation" id="exp3"></div>
+</section>
+<section class="question" id="q4">
+<div class="topic">Question 4 - Arrays</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int[] nums = {3, 1, 4, 1, 5};
+int total = 0;
+for (int n : nums) {
+    if (n &gt; 2) {
+        total += n;
+    } else {
+        total -= n;
+    }
+}
+System.out.println(total);</code></pre>
+<label><input type="radio" name="q4" value="A"> A. 8</label>
+<label><input type="radio" name="q4" value="B"> B. 9</label>
+<label><input type="radio" name="q4" value="C"> C. 10</label>
+<label><input type="radio" name="q4" value="D"> D. 14</label>
+<div class="explanation" id="exp4"></div>
+</section>
+<section class="question" id="q5">
+<div class="topic">Question 5 - Arrays</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int[] a = {2, 4, 6, 8};
+for (int i = 1; i &lt; a.length; i++) {
+    a[i] = a[i] - a[i - 1];
+}
+System.out.println(Arrays.toString(a));</code></pre>
+<label><input type="radio" name="q5" value="A"> A. [2, 2, 2, 2]</label>
+<label><input type="radio" name="q5" value="B"> B. [2, 2, 4, 4]</label>
+<label><input type="radio" name="q5" value="C"> C. [2, 4, 2, 4]</label>
+<label><input type="radio" name="q5" value="D"> D. [2, 6, 10, 14]</label>
+<div class="explanation" id="exp5"></div>
+</section>
+<section class="question" id="q6">
+<div class="topic">Question 6 - Arrays and Loops</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int[] data = {5, 2, 9, 1, 7};
+int result = 0;
+for (int i = 0; i &lt; data.length; i += 2) {
+    result += data[i];
+}
+System.out.println(result);</code></pre>
+<label><input type="radio" name="q6" value="A"> A. 14</label>
+<label><input type="radio" name="q6" value="B"> B. 16</label>
+<label><input type="radio" name="q6" value="C"> C. 21</label>
+<label><input type="radio" name="q6" value="D"> D. 24</label>
+<div class="explanation" id="exp6"></div>
+</section>
+<section class="question" id="q7">
+<div class="topic">Question 7 - Strings and Loops</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>String s = &quot;COMPUTER&quot;;
+String out = &quot;&quot;;
+for (int i = 0; i &lt; s.length(); i += 2) {
+    out += s.substring(i, i + 1);
+}
+System.out.println(out);</code></pre>
+<label><input type="radio" name="q7" value="A"> A. CMPTR</label>
+<label><input type="radio" name="q7" value="B"> B. CMUE</label>
+<label><input type="radio" name="q7" value="C"> C. OPTR</label>
+<label><input type="radio" name="q7" value="D"> D. COMPUTER</label>
+<div class="explanation" id="exp7"></div>
+</section>
+<section class="question" id="q8">
+<div class="topic">Question 8 - Strings and Logic</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>String s = &quot;banana&quot;;
+int count = 0;
+for (int i = 0; i &lt; s.length(); i++) {
+    if (s.charAt(i) == &#x27;a&#x27; || s.charAt(i) == &#x27;n&#x27;) {
+        count++;
+    }
+}
+System.out.println(count);</code></pre>
+<label><input type="radio" name="q8" value="A"> A. 3</label>
+<label><input type="radio" name="q8" value="B"> B. 4</label>
+<label><input type="radio" name="q8" value="C"> C. 5</label>
+<label><input type="radio" name="q8" value="D"> D. 6</label>
+<div class="explanation" id="exp8"></div>
+</section>
+<section class="question" id="q9">
+<div class="topic">Question 9 - Strings</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>String s = &quot;code&quot;;
+String t = &quot;&quot;;
+for (int i = s.length() - 1; i &gt;= 0; i--) {
+    t += s.charAt(i);
+}
+System.out.println(t.substring(1));</code></pre>
+<label><input type="radio" name="q9" value="A"> A. edoc</label>
+<label><input type="radio" name="q9" value="B"> B. doc</label>
+<label><input type="radio" name="q9" value="C"> C. cod</label>
+<label><input type="radio" name="q9" value="D"> D. ode</label>
+<div class="explanation" id="exp9"></div>
+</section>
+<section class="question" id="q10">
+<div class="topic">Question 10 - ArrayList</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>ArrayList&lt;String&gt; words = new ArrayList&lt;String&gt;();
+words.add(&quot;red&quot;);
+words.add(&quot;blue&quot;);
+words.add(1, &quot;green&quot;);
+words.set(0, &quot;yellow&quot;);
+System.out.println(words);</code></pre>
+<label><input type="radio" name="q10" value="A"> A. [yellow, green, blue]</label>
+<label><input type="radio" name="q10" value="B"> B. [red, green, blue]</label>
+<label><input type="radio" name="q10" value="C"> C. [yellow, blue, green]</label>
+<label><input type="radio" name="q10" value="D"> D. [green, yellow, blue]</label>
+<div class="explanation" id="exp10"></div>
+</section>
+<section class="question" id="q11">
+<div class="topic">Question 11 - ArrayList and Loops</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>ArrayList&lt;Integer&gt; nums = new ArrayList&lt;Integer&gt;();
+nums.add(2);
+nums.add(4);
+nums.add(8);
+nums.add(6);
+for (int i = 0; i &lt; nums.size(); i++) {
+    if (nums.get(i) % 4 == 0) {
+        nums.remove(i);
+    }
+}
+System.out.println(nums);</code></pre>
+<label><input type="radio" name="q11" value="A"> A. [2, 6]</label>
+<label><input type="radio" name="q11" value="B"> B. [2, 8, 6]</label>
+<label><input type="radio" name="q11" value="C"> C. [2, 4, 6]</label>
+<label><input type="radio" name="q11" value="D"> D. [4, 8]</label>
+<div class="explanation" id="exp11"></div>
+</section>
+<section class="question" id="q12">
+<div class="topic">Question 12 - ArrayList and Loops</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>ArrayList&lt;Integer&gt; a = new ArrayList&lt;Integer&gt;();
+for (int i = 1; i &lt;= 5; i++) {
+    a.add(i);
+}
+for (int i = a.size() - 1; i &gt;= 0; i--) {
+    if (a.get(i) % 2 == 1) {
+        a.remove(i);
+    }
+}
+System.out.println(a);</code></pre>
+<label><input type="radio" name="q12" value="A"> A. [1, 3, 5]</label>
+<label><input type="radio" name="q12" value="B"> B. [2, 4]</label>
+<label><input type="radio" name="q12" value="C"> C. [1, 2, 3, 4, 5]</label>
+<label><input type="radio" name="q12" value="D"> D. [4, 2]</label>
+<div class="explanation" id="exp12"></div>
+</section>
+<section class="question" id="q13">
+<div class="topic">Question 13 - Logic</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int a = 5;
+int b = 3;
+int c = 8;
+boolean result = (a &gt; b &amp;&amp; c &gt; a) || (b == 3 &amp;&amp; a + b &lt; c);
+System.out.println(result);</code></pre>
+<label><input type="radio" name="q13" value="A"> A. true</label>
+<label><input type="radio" name="q13" value="B"> B. false</label>
+<label><input type="radio" name="q13" value="C"> C. 8</label>
+<label><input type="radio" name="q13" value="D"> D. Compilation error</label>
+<div class="explanation" id="exp13"></div>
+</section>
+<section class="question" id="q14">
+<div class="topic">Question 14 - Logic and Short-Circuit Evaluation</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int x = 0;
+boolean ok = (x != 0 &amp;&amp; 10 / x &gt; 1) || x == 0;
+System.out.println(ok);</code></pre>
+<label><input type="radio" name="q14" value="A"> A. true</label>
+<label><input type="radio" name="q14" value="B"> B. false</label>
+<label><input type="radio" name="q14" value="C"> C. 0</label>
+<label><input type="radio" name="q14" value="D"> D. Runtime error</label>
+<div class="explanation" id="exp14"></div>
+</section>
+<section class="question" id="q15">
+<div class="topic">Question 15 - While Loops</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int n = 1234;
+int sum = 0;
+while (n &gt; 0) {
+    sum += n % 10;
+    n /= 10;
+}
+System.out.println(sum);</code></pre>
+<label><input type="radio" name="q15" value="A"> A. 4</label>
+<label><input type="radio" name="q15" value="B"> B. 10</label>
+<label><input type="radio" name="q15" value="C"> C. 1234</label>
+<label><input type="radio" name="q15" value="D"> D. 4321</label>
+<div class="explanation" id="exp15"></div>
+</section>
+<section class="question" id="q16">
+<div class="topic">Question 16 - While Loops and Strings</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>String s = &quot;abcabc&quot;;
+int i = 0;
+int count = 0;
+while (i &lt; s.length()) {
+    if (s.substring(i, i + 1).equals(&quot;a&quot;)) {
+        count++;
+    }
+    i += 2;
+}
+System.out.println(count);</code></pre>
+<label><input type="radio" name="q16" value="A"> A. 1</label>
+<label><input type="radio" name="q16" value="B"> B. 2</label>
+<label><input type="radio" name="q16" value="C"> C. 3</label>
+<label><input type="radio" name="q16" value="D"> D. 6</label>
+<div class="explanation" id="exp16"></div>
+</section>
+<section class="question" id="q17">
+<div class="topic">Question 17 - Break, Continue, and Loops</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int total = 0;
+for (int i = 1; i &lt;= 6; i++) {
+    if (i == 4) {
+        break;
+    }
+    if (i % 2 == 0) {
+        continue;
+    }
+    total += i;
+}
+System.out.println(total);</code></pre>
+<label><input type="radio" name="q17" value="A"> A. 3</label>
+<label><input type="radio" name="q17" value="B"> B. 4</label>
+<label><input type="radio" name="q17" value="C"> C. 9</label>
+<label><input type="radio" name="q17" value="D"> D. 12</label>
+<div class="explanation" id="exp17"></div>
+</section>
+<section class="question" id="q18">
+<div class="topic">Question 18 - Arrays and Logic</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int[] scores = {70, 85, 90, 60, 100};
+int pass = 0;
+for (int i = 0; i &lt; scores.length; i++) {
+    if (scores[i] &gt;= 80 &amp;&amp; i % 2 == 0) {
+        pass++;
+    }
+}
+System.out.println(pass);</code></pre>
+<label><input type="radio" name="q18" value="A"> A. 1</label>
+<label><input type="radio" name="q18" value="B"> B. 2</label>
+<label><input type="radio" name="q18" value="C"> C. 3</label>
+<label><input type="radio" name="q18" value="D"> D. 4</label>
+<div class="explanation" id="exp18"></div>
+</section>
+<section class="question" id="q19">
+<div class="topic">Question 19 - Arrays and Aliasing</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>int[] x = {1, 2, 3};
+int[] y = x;
+y[1] = 10;
+x[2] = x[0] + y[1];
+System.out.println(Arrays.toString(x));</code></pre>
+<label><input type="radio" name="q19" value="A"> A. [1, 2, 3]</label>
+<label><input type="radio" name="q19" value="B"> B. [1, 10, 3]</label>
+<label><input type="radio" name="q19" value="C"> C. [1, 10, 11]</label>
+<label><input type="radio" name="q19" value="D"> D. [1, 2, 11]</label>
+<div class="explanation" id="exp19"></div>
+</section>
+<section class="question" id="q20">
+<div class="topic">Question 20 - ArrayList, Strings, and Loops</div>
+<p><strong>What is printed by the following code?</strong></p>
+<pre><code>ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;();
+list.add(&quot;AP&quot;);
+list.add(&quot;CS&quot;);
+list.add(&quot;A&quot;);
+String result = &quot;&quot;;
+for (int i = 0; i &lt; list.size(); i++) {
+    result += list.get(i).length();
+}
+System.out.println(result);</code></pre>
+<label><input type="radio" name="q20" value="A"> A. 5</label>
+<label><input type="radio" name="q20" value="B"> B. 221</label>
+<label><input type="radio" name="q20" value="C"> C. 2 2 1</label>
+<label><input type="radio" name="q20" value="D"> D. APCSA</label>
+<div class="explanation" id="exp20"></div>
+</section>
+
+<section class="results" id="results">
+  <button onclick="gradeQuiz()">Submit and Grade</button>
+  <button class="secondary" onclick="resetQuiz()">Reset</button>
+  <button class="secondary" onclick="window.print()">Print / Save as PDF</button>
+  <div id="score"></div>
+  <div id="breakdown"></div>
+</section>
+</main>
+<script>
+const answers = {"1": "C", "2": "D", "3": "C", "4": "C", "5": "B", "6": "C", "7": "B", "8": "C", "9": "B", "10": "A", "11": "B", "12": "B", "13": "A", "14": "A", "15": "B", "16": "A", "17": "B", "18": "B", "19": "C", "20": "B"};
+const explanations = {"1": "The even values 2, 4, and 6 are added. The odd values 1, 3, and 5 each subtract 1, so the final sum is 9.", "2": "x changes as 2 -> 4 -> 7 -> 12 -> 21.", "3": "For each i, two values of j make i + j even. There are 3 rows, so 2 + 2 + 2 = 6.", "4": "3 - 1 + 4 - 1 + 5 = 10.", "5": "The array is updated from left to right, so later calculations use already changed values.", "6": "The loop visits indexes 0, 2, and 4, so 5 + 9 + 7 = 21.", "7": "The loop takes characters at indexes 0, 2, 4, and 6: C, M, U, E.", "8": "The letters a and n appear 5 total times in banana.", "9": "The reverse of code is edoc. substring(1) removes the first character, leaving doc.", "10": "green is inserted at index 1, then red at index 0 is replaced with yellow.", "11": "After 4 is removed, 8 shifts left and is skipped because i increases.", "12": "The loop goes backward and removes odd values, leaving 2 and 4.", "13": "a > b and c > a are both true, so the first part is true. true || anything is true.", "14": "Because x != 0 is false, Java does not evaluate 10 / x. Then x == 0 is true.", "15": "The loop adds the digits 4 + 3 + 2 + 1 = 10.", "16": "The loop checks indexes 0, 2, and 4. Only index 0 is a.", "17": "The loop adds 1 and 3, skips 2, and stops when i is 4.", "18": "Indexes 2 and 4 have scores at least 80. Index 1 is at least 80 but is not even.", "19": "x and y refer to the same array. Changing y also changes the array seen by x.", "20": "result is a String, so the lengths are concatenated as text: 2, then 2, then 1."};
+function gradeQuiz() {
+  let score = 0;
+  let rows = '<table><tr><th>Question</th><th>Your Answer</th><th>Correct Answer</th><th>Result</th></tr>';
+  for (let i = 1; i <= 20; i++) {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    const user = selected ? selected.value : '-';
+    const correct = answers[String(i)];
+    const isCorrect = user === correct;
+    if (isCorrect) score++;
+    const q = document.getElementById(`q${i}`);
+    q.classList.remove('correct', 'incorrect');
+    q.classList.add(isCorrect ? 'correct' : 'incorrect');
+    const exp = document.getElementById(`exp${i}`);
+    exp.style.display = 'block';
+    exp.innerHTML = `<strong>Answer: ${correct}</strong><br>${explanations[String(i)]}`;
+    rows += `<tr><td>${i}</td><td>${user}</td><td>${correct}</td><td>${isCorrect ? 'Correct' : 'Incorrect'}</td></tr>`;
+  }
+  rows += '</table>';
+  document.getElementById('score').innerHTML = `<p class="scoreLine">Score: ${score} / 20 (${Math.round(score / 20 * 100)}%)</p>`;
+  document.getElementById('breakdown').innerHTML = rows;
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+function resetQuiz() {
+  document.querySelectorAll('input[type="radio"]').forEach(x => x.checked = false);
+  document.querySelectorAll('.question').forEach(q => q.classList.remove('correct', 'incorrect'));
+  document.querySelectorAll('.explanation').forEach(e => { e.style.display = 'none'; e.innerHTML = ''; });
+  document.getElementById('score').innerHTML = '';
+  document.getElementById('breakdown').innerHTML = '';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
